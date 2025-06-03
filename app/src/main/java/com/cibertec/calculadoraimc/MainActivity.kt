@@ -1,12 +1,15 @@
-package com.cibertec.calculadoraimc
+package com.example.calculadoraimc_t1
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ListView
 import android.widget.TextView
 
 import androidx.appcompat.app.AppCompatActivity
@@ -15,10 +18,16 @@ import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
 
+
+
     private lateinit var editPeso: TextInputEditText
     private lateinit var editAltura: TextInputEditText
     private lateinit var txtResultado: TextView
 
+    private lateinit var listViewIMC: ListView
+
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,6 +41,24 @@ class MainActivity : AppCompatActivity() {
 
         btnCalcular.setOnClickListener { calcularIMC() }
         btnLimpiar.setOnClickListener { limpiarCampos() }
+
+
+        listViewIMC = findViewById(R.id.listViewIMC)
+
+
+        val datos = listOf(
+            "Bajo peso:                IMC < 18.5",
+            "Peso normal:             18.5 <= IMC <= 24.9",
+            "Sobrepeso:                25 <= IMC <= 29.9",
+            "Obesidad:                  IMC >= 30"
+        )
+
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, datos)
+        listViewIMC.adapter = adapter
+
+
+
     }
 
     private fun calcularIMC() {
